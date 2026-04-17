@@ -517,9 +517,25 @@
     };
 
     document.getElementById('copyBtn').onclick = async () => {
-      await navigator.clipboard.writeText(output);
-      triggerSparkle();
-      status.textContent = 'Copied to clipboard.';
+      try {
+        const blob = new Blob([output], { type: 'text/html' });
+        const item = new ClipboardItem({
+          'text/html': blob,
+          'text/plain': new Blob([preview.innerText], { type: 'text/plain' })
+        });
+        await navigator.clipboard.write([item]);
+        triggerSparkle();
+        status.textContent = 'Copied for CMS paste.';
+      } catch (error) {
+        console.error(error);
+        try {
+          await navigator.clipboard.writeText(output);
+          status.textContent = 'Copied as HTML source.';
+        } catch (fallbackError) {
+          console.error(fallbackError);
+          status.textContent = 'Copy failed.';
+        }
+      }
     };
 
     document.getElementById('downloadBtn').onclick = () => {
