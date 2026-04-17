@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MarinMagic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;800&family=Carter+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #fff;
+      color: #111827;
+      font-family: 'Public Sans', Arial, sans-serif;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 120px;
+    }
+    h1 {
+      margin: 0 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #000;
+      font-size: 2.6rem;
+      line-height: 1;
+    }
+    .title-text {
+      font-family: 'Carter One', cursive;
+    }
+    .icon-inline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-inline i {
+      font-size: 2rem;
+      color: #000;
+      line-height: 1;
+      transform-origin: center center;
+    }
+    @keyframes sparkle {
+      0% { transform: scale(1) rotate(0deg); opacity: 1; }
+      15% { transform: scale(1.18) rotate(-10deg); opacity: 0.85; }
+      30% { transform: scale(1.32) rotate(12deg); opacity: 1; }
+      45% { transform: scale(1.16) rotate(-8deg); opacity: 0.88; }
+      60% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+      75% { transform: scale(1.14) rotate(-6deg); opacity: 0.9; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    h1.sparkle-active .icon-inline i {
+      animation: sparkle 0.8s ease-in-out 6 !important;
+      animation-fill-mode: none;
+      display: inline-block;
+      filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.25));
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #dbe4dd;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    label,
+    strong {
+      font-weight: 800;
+    }
+    select,
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font: inherit;
+      background: #fff;
+    }
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .primary {
+      background: #1c75bc;
+      color: #fff;
+    }
+    .dark {
+      background: #111827;
+      color: #fff;
+    }
+    .light {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    #status {
+      margin: 12px 0 0;
+      color: #64748b;
+    }
+    #preview {
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      min-height: 200px;
+      margin-top: 8px;
+      margin-bottom: 40px;
+    }
+    #preview p.alpha-links {
+      margin-top: 0;
+      margin-bottom: 18px;
+    }
+    #preview p.alpha-links a {
+      color: #1c75bc;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    #columnCheckboxes {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      margin-bottom: 8px;
+    }
+    .drag-item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: #fff;
+      cursor: grab;
+      user-select: none;
+      text-align: left;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .drag-item input {
+      margin: 0;
+      width: 18px;
+      min-width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+    }
+    .drag-item span {
+      flex: 1 1 auto;
+      text-align: left;
+      line-height: 1.3;
+    }
+    .drag-item.dragging {
+      opacity: 0.65;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      border-color: #1c75bc;
+      background: #f8fbff;
+    }
+    .drag-item.drag-over {
+      border-color: #1c75bc;
+      box-shadow: 0 0 0 3px rgba(28, 117, 188, 0.18);
+      background: #f4f9ff;
+    }
+    .feedback-button {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: #000;
+      border: 1px solid #000;
+      border-radius: 999px;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="title"><span class="icon-inline"><i class="fa-solid fa-wand-magic-sparkles"></i></span><span class="title-text">MarinMagic</span></h1>
+
+    <div class="card">
+      <label for="fileTypeSelect">File type</label>
+      <select id="fileTypeSelect">
+        <option value="csv">.csv</option>
+        <option value="xlsx">.xlsx</option>
+        <option value="json">.json</option>
+      </select>
+
+      <label for="fileInput">Upload file</label>
+      <input id="fileInput" type="file" accept=".csv,.xlsx,.xls,.json,application/json,text/csv" />
+      <p id="status">Select a file to begin.</p>
+    </div>
+
+    <div id="mappingPanel" class="card" style="display:none;">
+      <h2>Field mapping</h2>
+
+      <label for="h2Select">Select heading column</label>
+      <select id="h2Select"></select>
+
+      <label for="headingLevelSelect">Top-level</label>
+      <select id="headingLevelSelect">
+        <option value="h2" selected>h2</option>
+        <option value="h3">h3</option>
+        <option value="h4">h4</option>
+        <option value="h5">h5</option>
+        <option value="h6">h6</option>
+      </select>
+
+      <strong>Select columns for list</strong>
+      <p id="dragHint">Drag to reorder list items.</p>
+      <div id="columnCheckboxes"></div>
+    </div>
+
+    <div class="buttons">
+      <button id="generateBtn" class="primary" type="button">Generate preview</button>
+      <button id="copyBtn" class="primary" type="button">Copy text</button>
+      <button id="downloadBtn" class="dark" type="button">Download HTML</button>
+      <button id="downloadJsonBtn" class="dark" type="button">Download JSON</button>
+      <button id="resetBtn" class="light" type="button">Reset</button>
+    </div>
+
+    <div class="card">
+      <h2>Preview</h2>
+      <div id="preview"></div>
+    </div>
+  </div>
+
+  <a class="feedback-button" href="https://form.asana.com/?k=qVUT83d5DBmlDiIyi-WAyQ&d=23133298259496" target="_blank" rel="noreferrer"><i class="fa-solid fa-circle-plus"></i> Feedback</a>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const fileTypeSelect = document.getElementById('fileTypeSelect');
+    const status = document.getElementById('status');
+    const mappingPanel = document.getElementById('mappingPanel');
+    const h2Select = document.getElementById('h2Select');
+    const headingLevelSelect = document.getElementById('headingLevelSelect');
+    const columnCheckboxes = document.getElementById('columnCheckboxes');
+    const preview = document.getElementById('preview');
+    const titleHeading = document.getElementById('title');
+    const wandIcon = document.querySelector('.icon-inline i');
+
+    let headers = [];
+    let rows = [];
+    let output = '';
+
+    function triggerSparkle() {
+      if (!wandIcon || !wandIcon.animate) return;
+      wandIcon.getAnimations().forEach(animation => animation.cancel());
+      wandIcon.animate([
+        { transform: 'scale(1) rotate(0deg)', filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))', offset: 0 },
+        { transform: 'scale(1.35) rotate(-16deg)', filter: 'drop-shadow(0 0 4px rgba(0,0,0,0.2))', offset: 0.2 },
+        { transform: 'scale(1.55) rotate(18deg)', filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.35))', offset: 0.4 },
+        { transform: 'scale(1.25) rotate(-12deg)', filter: 'drop-shadow(0 0 6px rgba(0,0,0,0.25))', offset: 0.6 },
+        { transform: 'scale(1.45) rotate(14deg)', filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.35))', offset: 0.8 },
+        { transform: 'scale(1) rotate(0deg)', filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))', offset: 1 }
+      ], {
+        duration: 5000,
+        iterations: 1,
+        easing: 'ease-in-out'
+      });
+    }
+
+    function clean(v) {
+      return v == null ? '' : String(v).trim();
+    }
+
+    function esc(v) {
+      return clean(v)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function parseCsv(text) {
+      const lines = text.split(/\r?\n/).filter(line => line.length > 0);
+      return lines.map(line => {
+        const row = [];
+        let cell = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i += 1) {
+          const char = line[i];
+          const next = line[i + 1];
+          if (char === '"') {
+            if (inQuotes && next === '"') {
+              cell += '"';
+              i += 1;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (char === ',' && !inQuotes) {
+            row.push(cell);
+            cell = '';
+          } else {
+            cell += char;
+          }
+        }
+        row.push(cell);
+        return row;
+      });
+    }
+
+    function parseJson(text) {
+      const data = JSON.parse(text);
+      if (!Array.isArray(data)) {
+        throw new Error('JSON must be an array of objects.');
+      }
+      const keys = [...new Set(data.flatMap(item => Object.keys(item || {})))];
+      return [keys, ...data.map(item => keys.map(key => item && item[key] != null ? String(item[key]) : ''))];
+    }
+
+    function updateAccept() {
+      if (fileTypeSelect.value === 'csv') {
+        fileInput.accept = '.csv,text/csv';
+      } else if (fileTypeSelect.value === 'xlsx') {
+        fileInput.accept = '.xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel';
+      } else {
+        fileInput.accept = '.json,application/json';
+      }
+    }
+
+    function enableDragDrop() {
+      let dragged = null;
+      [...columnCheckboxes.querySelectorAll('.drag-item')].forEach(item => {
+        item.addEventListener('dragstart', () => {
+          dragged = item;
+          item.classList.add('dragging');
+        });
+        item.addEventListener('dragend', () => {
+          item.classList.remove('dragging');
+          [...columnCheckboxes.querySelectorAll('.drag-item')].forEach(el => el.classList.remove('drag-over'));
+          dragged = null;
+        });
+        item.addEventListener('dragover', event => {
+          event.preventDefault();
+          [...columnCheckboxes.querySelectorAll('.drag-item')].forEach(el => {
+            if (el !== item) el.classList.remove('drag-over');
+          });
+          if (dragged && dragged !== item) {
+            item.classList.add('drag-over');
+          }
+        });
+        item.addEventListener('dragleave', () => {
+          item.classList.remove('drag-over');
+        });
+        item.addEventListener('drop', event => {
+          event.preventDefault();
+          item.classList.remove('drag-over');
+          if (!dragged || dragged === item) return;
+          const items = [...columnCheckboxes.querySelectorAll('.drag-item')];
+          const draggedIndex = items.indexOf(dragged);
+          const targetIndex = items.indexOf(item);
+          if (draggedIndex < targetIndex) {
+            columnCheckboxes.insertBefore(dragged, item.nextSibling);
+          } else {
+            columnCheckboxes.insertBefore(dragged, item);
+          }
+        });
+      });
+    }
+
+    function renderMapping() {
+      h2Select.innerHTML = '';
+      columnCheckboxes.innerHTML = '';
+      headers.forEach((header, index) => {
+        const label = clean(header) || `Column ${index + 1}`;
+
+        const option = document.createElement('option');
+        option.value = String(index);
+        option.textContent = label;
+        h2Select.appendChild(option);
+
+        const row = document.createElement('label');
+        row.className = 'drag-item';
+        row.draggable = true;
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = String(index);
+        checkbox.checked = index !== 0;
+
+        const text = document.createElement('span');
+        text.textContent = label;
+
+        row.appendChild(checkbox);
+        row.appendChild(text);
+        columnCheckboxes.appendChild(row);
+      });
+      enableDragDrop();
+    }
+
+    function build() {
+      const headingIndex = Number(h2Select.value);
+      const headingTag = headingLevelSelect.value || 'h2';
+      const selectedColumns = [...columnCheckboxes.querySelectorAll('input:checked')]
+        .map(input => Number(input.value))
+        .filter(index => index !== headingIndex);
+
+      const records = rows
+        .map(row => ({ heading: clean(row[headingIndex]), row }))
+        .filter(record => record.heading)
+        .sort((a, b) => a.heading.localeCompare(b.heading, undefined, { sensitivity: 'base' }));
+
+      const letters = [];
+      records.forEach(record => {
+        const first = (record.heading.charAt(0).toUpperCase() || '#');
+        const letter = /^[A-Z]$/.test(first) ? first : '#';
+        if (!letters.includes(letter)) letters.push(letter);
+      });
+      letters.sort((a, b) => {
+        if (a === '#') return -1;
+        if (b === '#') return 1;
+        return a.localeCompare(b);
+      });
+
+      const nav = letters.length
+        ? `<p class="alpha-links">${letters.map(letter => `<a href="#section-${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>`
+        : '';
+
+      const seen = new Set();
+      const html = records.map(record => {
+        const first = (record.heading.charAt(0).toUpperCase() || '#');
+        const letter = /^[A-Z]$/.test(first) ? first : '#';
+        const anchorId = `section-${letter === '#' ? 'other' : letter}`;
+        const anchor = seen.has(letter) ? '' : `<a id="${anchorId}"></a>`;
+        seen.add(letter);
+
+        const listItems = selectedColumns
+          .map(index => clean(record.row[index]) ? `<li>${esc(headers[index])}: ${esc(record.row[index])}</li>` : '')
+          .join('');
+
+        return `${anchor}<${headingTag}>${esc(record.heading)}</${headingTag}><ul>${listItems}</ul>`;
+      }).join('');
+
+      output = `${nav}${html}`;
+      preview.innerHTML = output;
+      triggerSparkle();
+    }
+
+    function loadTable(table) {
+      headers = table[0] || [];
+      rows = table.slice(1).filter(row => Array.isArray(row) && row.some(value => clean(value)));
+      if (!headers.length || !rows.length) {
+        mappingPanel.style.display = 'none';
+        preview.innerHTML = '';
+        status.textContent = 'No usable data found.';
+        return;
+      }
+      mappingPanel.style.display = 'block';
+      renderMapping();
+      build();
+      status.textContent = 'Preview generated.';
+    }
+
+    fileTypeSelect.addEventListener('change', () => {
+      updateAccept();
+      status.textContent = 'Select a file to begin.';
+      fileInput.value = '';
+      preview.innerHTML = '';
+      mappingPanel.style.display = 'none';
+    });
+
+    fileInput.addEventListener('change', event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      status.textContent = `Reading ${fileTypeSelect.value}...`;
+
+      if (fileTypeSelect.value === 'xlsx') {
+        reader.onload = e => {
+          try {
+            const workbook = XLSX.read(e.target.result, { type: 'array' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const table = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+            loadTable(table);
+          } catch (error) {
+            console.error(error);
+            status.textContent = 'Could not read the XLSX file.';
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      } else {
+        reader.onload = e => {
+          try {
+            const text = String(e.target.result || '');
+            const table = fileTypeSelect.value === 'json' ? parseJson(text) : parseCsv(text);
+            loadTable(table);
+          } catch (error) {
+            console.error(error);
+            status.textContent = `Could not read the ${fileTypeSelect.value.toUpperCase()} file.`;
+          }
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    document.getElementById('generateBtn').onclick = () => {
+      build();
+      status.textContent = 'Preview generated.';
+    };
+
+    document.getElementById('copyBtn').onclick = async () => {
+      await navigator.clipboard.writeText(output);
+      triggerSparkle();
+      status.textContent = 'Copied to clipboard.';
+    };
+
+    document.getElementById('downloadBtn').onclick = () => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([output], { type: 'text/html' }));
+      a.download = 'index.html';
+      a.click();
+      triggerSparkle();
+      status.textContent = 'HTML file downloaded.';
+    };
+
+    document.getElementById('downloadJsonBtn').onclick = () => {
+      const data = rows.map(row => Object.fromEntries(headers.map((header, index) => [header, row[index] ?? ''])));
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+      a.download = 'output.json';
+      a.click();
+      triggerSparkle();
+      status.textContent = 'JSON file downloaded.';
+    };
+
+    document.getElementById('resetBtn').onclick = () => {
+      fileInput.value = '';
+      preview.innerHTML = '';
+      mappingPanel.style.display = 'none';
+      headers = [];
+      rows = [];
+      output = '';
+      status.textContent = 'Select a file to begin.';
+      triggerSparkle();
+    };
+
+    updateAccept();
+  </script>
+</body>
+</html>
