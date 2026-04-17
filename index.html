@@ -449,6 +449,9 @@
       output = `${nav}${html}`;
       preview.innerHTML = output;
       htmlPreview.textContent = output;
+      if (toggleHtmlBtn.textContent === 'Hide HTML') {
+        htmlPreview.style.display = 'block';
+      }
       triggerSparkle();
     }
 
@@ -520,33 +523,28 @@
 
     document.getElementById('copyBtn').onclick = async () => {
       try {
-        const temp = document.createElement('div');
-        temp.setAttribute('contenteditable', 'true');
-        temp.style.position = 'fixed';
-        temp.style.left = '-9999px';
-        temp.style.top = '0';
-        temp.style.opacity = '0';
-        temp.style.pointerEvents = 'none';
-        temp.innerHTML = preview.innerHTML;
-        document.body.appendChild(temp);
-        const range = document.createRange();
-        range.selectNodeContents(temp);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-        const copied = document.execCommand('copy');
-        selection.removeAllRanges();
-        document.body.removeChild(temp);
-        if (!copied) throw new Error('copy failed');
+        const htmlFragment = output || '';
+        const item = new ClipboardItem({
+          'text/html': new Blob([htmlFragment], { type: 'text/html' }),
+          'text/plain': new Blob([preview.innerText || ''], { type: 'text/plain' })
+        });
+        await navigator.clipboard.write([item]);
         triggerSparkle();
         status.textContent = 'Copied for CMS paste.';
       } catch (error) {
         console.error(error);
-        status.textContent = 'Copy failed.';
+        try {
+          await navigator.clipboard.writeText(output || '');
+          status.textContent = 'Copied as HTML source.';
+        } catch (fallbackError) {
+          console.error(fallbackError);
+          status.textContent = 'Copy failed.';
+        }
       }
     };
 
     toggleHtmlBtn.onclick = () => {
+      htmlPreview.textContent = output || '';
       const isHidden = htmlPreview.style.display === 'none' || htmlPreview.style.display === '';
       htmlPreview.style.display = isHidden ? 'block' : 'none';
       toggleHtmlBtn.textContent = isHidden ? 'Hide HTML' : 'Preview HTML';
