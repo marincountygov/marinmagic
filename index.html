@@ -10,186 +10,44 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
-    body {
-      margin: 0;
-      background: #fff;
-      color: #111827;
-      font-family: 'Public Sans', Arial, sans-serif;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 32px 20px 120px;
-    }
-    h1 {
-      margin: 0 0 28px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #000;
-      font-size: 2.6rem;
-      line-height: 1;
-    }
-    .title-text {
-      font-family: 'Carter One', cursive;
-    }
-    .icon-inline {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .icon-inline i {
-      font-size: 2rem;
-      color: #000;
-      line-height: 1;
-      transform-origin: center center;
-    }
-    .card {
-      background: #fff;
-      border: 1px solid #dbe4dd;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    label,
-    strong {
-      font-weight: 800;
-    }
-    select,
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      box-sizing: border-box;
-      font: inherit;
-      background: #fff;
-    }
-    .buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
-    }
-    button {
-      padding: 12px 18px;
-      border: none;
-      border-radius: 10px;
-      font-weight: 800;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    .primary {
-      background: #1c75bc;
-      color: #fff;
-    }
-    .dark {
-      background: #111827;
-      color: #fff;
-    }
-    .light {
-      background: #e5e7eb;
-      color: #111827;
-    }
-    #status {
-      margin: 12px 0 0;
-      color: #64748b;
-    }
-    #preview {
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 16px;
-      min-height: 200px;
-      margin-top: 8px;
-      margin-bottom: 24px;
-    }
-    #htmlPreview {
-      display: none;
-      margin-top: 16px;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 16px;
-      overflow: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      background: #f8fafc;
-    }
-    #preview p.alpha-links {
-      margin-top: 0;
-      margin-bottom: 18px;
-    }
-    #preview p.alpha-links a {
-      color: #1c75bc;
-      font-weight: 800;
-      text-decoration: none;
-    }
-    #columnCheckboxes {
-      display: grid;
-      gap: 8px;
-      margin-top: 10px;
-      margin-bottom: 8px;
-    }
-    .drag-item {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 12px;
-      padding: 12px 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      background: #fff;
-      cursor: grab;
-      user-select: none;
-      text-align: left;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .drag-item input {
-      margin: 0;
-      width: 18px;
-      min-width: 18px;
-      height: 18px;
-      flex: 0 0 18px;
-    }
-    .drag-item span {
-      flex: 1 1 auto;
-      text-align: left;
-      line-height: 1.3;
-    }
-    .drag-item.dragging {
-      opacity: 0.65;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-      border-color: #1c75bc;
-      background: #f8fbff;
-    }
-    .drag-item.drag-over {
-      border-color: #1c75bc;
-      box-shadow: 0 0 0 3px rgba(28, 117, 188, 0.18);
-      background: #f4f9ff;
-    }
-    .feedback-button {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #fff;
-      color: #000;
-      border: 1px solid #000;
-      border-radius: 999px;
-      padding: 12px 16px;
-      text-decoration: none;
-      font-weight: 800;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      z-index: 1000;
-    }
+    body { margin: 0; background: #fff; color: #111827; font-family: 'Public Sans', Arial, sans-serif; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px 120px; }
+    h1 { margin: 0 0 28px; display: flex; align-items: center; gap: 10px; color: #000; font-size: 2.6rem; line-height: 1; }
+    .title-text { font-family: 'Carter One', cursive; }
+    .icon-inline { display: inline-flex; align-items: center; justify-content: center; }
+    .icon-inline i { font-size: 2rem; color: #000; line-height: 1; transform-origin: center center; }
+    .card { background: #fff; border: 1px solid #dbe4dd; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+    label, strong { font-weight: 800; }
+    select, input { width: 100%; padding: 12px; margin: 8px 0 12px; border: 1px solid #cbd5e1; border-radius: 10px; box-sizing: border-box; font: inherit; background: #fff; }
+    .buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+    button { padding: 12px 18px; border: none; border-radius: 10px; font-weight: 800; font-family: inherit; cursor: pointer; }
+    .primary { background: #1c75bc; color: #fff; }
+    .dark { background: #111827; color: #fff; }
+    .light { background: #e5e7eb; color: #111827; }
+    #status { margin: 12px 0 0; color: #64748b; }
+    #preview, #htmlPreview { border: 1px solid #cbd5e1; border-radius: 12px; padding: 16px; min-height: 200px; margin-top: 8px; }
+    #htmlPreview { display: block; white-space: pre-wrap; word-break: break-word; background: #f8fafc; overflow: auto; }
+    #preview p.alpha-links { margin-top: 0; margin-bottom: 18px; }
+    #preview p.alpha-links a { color: #1c75bc; font-weight: 800; text-decoration: none; }
+    #columnCheckboxes { display: grid; gap: 8px; margin-top: 10px; }
+    .drag-item { display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; cursor: grab; user-select: none; text-align: left; width: 100%; box-sizing: border-box; }
+    .drag-item input { margin: 0; width: 18px; min-width: 18px; height: 18px; flex: 0 0 18px; }
+    .drag-item span { flex: 1 1 auto; text-align: left; line-height: 1.3; }
+    .drag-item.dragging { opacity: 0.65; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18); border-color: #1c75bc; background: #f8fbff; }
+    .drag-item.drag-over { border-color: #1c75bc; box-shadow: 0 0 0 3px rgba(28, 117, 188, 0.22), 0 10px 24px rgba(0, 0, 0, 0.12); background: #f4f9ff; }
+    .preview-tabs { display: inline-flex; gap: 4px; padding: 4px; margin-top: 8px; margin-bottom: 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 999px; }
+    .tab-button { padding: 8px 14px; border: none; border-radius: 999px; background: transparent; color: #374151; font-weight: 800; font-family: inherit; cursor: pointer; }
+    .tab-button.active { background: #111827; color: #fff; }
+    .preview-pane { position: relative; }
+    .pane-toolbar { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+    .icon-copy-btn { width: 36px; height: 36px; border: 1px solid #d1d5db; border-radius: 10px; background: #fff; color: #374151; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+    .icon-copy-btn:hover { background: #f9fafb; }
+    .feedback-button { position: fixed; right: 20px; bottom: 20px; display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #000; border: 1px solid #000; border-radius: 999px; padding: 12px 16px; text-decoration: none; font-weight: 800; box-shadow: 0 6px 18px rgba(0,0,0,0.08); z-index: 1000; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 id="title"><span class="icon-inline"><i class="fa-solid fa-wand-magic-sparkles"></i></span><span class="title-text">MarinMagic</span></h1>
+    <h1><span class="icon-inline"><i class="fa-solid fa-wand-magic-sparkles"></i></span><span class="title-text">MarinMagic</span></h1>
 
     <div class="card">
       <label for="fileTypeSelect">File type</label>
@@ -206,10 +64,8 @@
 
     <div id="mappingPanel" class="card" style="display:none;">
       <h2>Field mapping</h2>
-
       <label for="h2Select">Select heading column</label>
       <select id="h2Select"></select>
-
       <label for="headingLevelSelect">Top-level</label>
       <select id="headingLevelSelect">
         <option value="h2" selected>h2</option>
@@ -218,23 +74,41 @@
         <option value="h5">h5</option>
         <option value="h6">h6</option>
       </select>
-
       <strong>Select columns for list</strong>
-      <p id="dragHint">Drag to reorder list items.</p>
+      <p>Drag to reorder list items.</p>
       <div id="columnCheckboxes"></div>
     </div>
 
     <div class="buttons">
       <button id="generateBtn" class="primary" type="button">Generate preview</button>
-      <button id="copyBtn" class="primary" type="button">Copy text</button>
-      <button id="toggleHtmlBtn" class="dark" type="button">Preview HTML</button>
+      <button id="downloadBtn" class="dark" type="button">Download HTML</button>
       <button id="resetBtn" class="light" type="button">Reset</button>
     </div>
 
     <div class="card">
       <h2>Preview</h2>
-      <div id="preview"></div>
-      <pre id="htmlPreview"></pre>
+      <div class="preview-tabs" role="tablist" aria-label="Preview modes">
+        <button id="viewTextBtn" class="tab-button active" type="button" role="tab" aria-selected="true">Text</button>
+        <button id="viewHtmlBtn" class="tab-button" type="button" role="tab" aria-selected="false">HTML</button>
+      </div>
+
+      <div id="textPane" class="preview-pane">
+        <div class="pane-toolbar">
+          <button id="copyPreviewBtn" class="icon-copy-btn" type="button" aria-label="Copy rich text" title="Copy rich text">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+        <div id="preview"></div>
+      </div>
+
+      <div id="htmlPane" class="preview-pane" style="display:none;">
+        <div class="pane-toolbar">
+          <button id="copyHtmlBtn" class="icon-copy-btn" type="button" aria-label="Copy HTML source" title="Copy HTML source">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+        <pre id="htmlPreview"></pre>
+      </div>
     </div>
   </div>
 
@@ -250,96 +124,66 @@
     const columnCheckboxes = document.getElementById('columnCheckboxes');
     const preview = document.getElementById('preview');
     const htmlPreview = document.getElementById('htmlPreview');
-    const toggleHtmlBtn = document.getElementById('toggleHtmlBtn');
-    const wandIcon = document.querySelector('.icon-inline i');
+    const textPane = document.getElementById('textPane');
+    const htmlPane = document.getElementById('htmlPane');
+    const viewTextBtn = document.getElementById('viewTextBtn');
+    const viewHtmlBtn = document.getElementById('viewHtmlBtn');
+    const copyPreviewBtn = document.getElementById('copyPreviewBtn');
+    const copyHtmlBtn = document.getElementById('copyHtmlBtn');
+    const generateBtn = document.getElementById('generateBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
 
     let headers = [];
     let rows = [];
     let output = '';
 
-    function triggerSparkle() {
-      if (!wandIcon || !wandIcon.animate) return;
-      wandIcon.getAnimations().forEach(animation => animation.cancel());
-      wandIcon.animate([
-        { transform: 'scale(1) rotate(0deg)', filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))', offset: 0 },
-        { transform: 'scale(1.35) rotate(-16deg)', filter: 'drop-shadow(0 0 4px rgba(0,0,0,0.2))', offset: 0.2 },
-        { transform: 'scale(1.55) rotate(18deg)', filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.35))', offset: 0.4 },
-        { transform: 'scale(1.25) rotate(-12deg)', filter: 'drop-shadow(0 0 6px rgba(0,0,0,0.25))', offset: 0.6 },
-        { transform: 'scale(1.45) rotate(14deg)', filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.35))', offset: 0.8 },
-        { transform: 'scale(1) rotate(0deg)', filter: 'drop-shadow(0 0 0 rgba(0,0,0,0))', offset: 1 }
-      ], {
-        duration: 5000,
-        iterations: 1,
-        easing: 'ease-in-out'
-      });
-    }
-
-    function clean(v) {
-      return v == null ? '' : String(v).trim();
-    }
-
+    function clean(v) { return v == null ? '' : String(v).trim(); }
     function esc(v) {
-      return clean(v)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+      return clean(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
     }
 
     function parseCsv(text) {
-      const lines = text.split(/\r?\n/).filter(line => line.length > 0);
-      return lines.map(line => {
-        const row = [];
-        let cell = '';
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i += 1) {
-          const char = line[i];
-          const next = line[i + 1];
-          if (char === '"') {
-            if (inQuotes && next === '"') {
-              cell += '"';
-              i += 1;
-            } else {
-              inQuotes = !inQuotes;
-            }
-          } else if (char === ',' && !inQuotes) {
-            row.push(cell);
-            cell = '';
-          } else {
-            cell += char;
-          }
+      const out = [];
+      let row = [];
+      let cell = '';
+      let inQuotes = false;
+      const normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      for (let i = 0; i < normalized.length; i += 1) {
+        const ch = normalized[i];
+        const next = normalized[i + 1];
+        if (ch === '"') {
+          if (inQuotes && next === '"') { cell += '"'; i += 1; }
+          else { inQuotes = !inQuotes; }
+        } else if (ch === ',' && !inQuotes) {
+          row.push(cell); cell = '';
+        } else if (ch === '\n' && !inQuotes) {
+          row.push(cell); out.push(row); row = []; cell = '';
+        } else {
+          cell += ch;
         }
-        row.push(cell);
-        return row;
-      });
+      }
+      if (cell !== '' || row.length) { row.push(cell); out.push(row); }
+      return out.filter(r => Array.isArray(r) && r.some(v => clean(v)));
     }
 
     function parseJson(text) {
       const data = JSON.parse(text);
-      if (!Array.isArray(data)) {
-        throw new Error('JSON must be an array of objects.');
-      }
+      if (!Array.isArray(data)) throw new Error('JSON must be an array of objects.');
       const keys = [...new Set(data.flatMap(item => Object.keys(item || {})))];
       return [keys, ...data.map(item => keys.map(key => item && item[key] != null ? String(item[key]) : ''))];
     }
 
     function updateAccept() {
-      if (fileTypeSelect.value === 'csv') {
-        fileInput.accept = '.csv,text/csv';
-      } else if (fileTypeSelect.value === 'xlsx') {
-        fileInput.accept = '.xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel';
-      } else {
-        fileInput.accept = '.json,application/json';
-      }
+      if (fileTypeSelect.value === 'csv') fileInput.accept = '.csv,text/csv';
+      else if (fileTypeSelect.value === 'xlsx') fileInput.accept = '.xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel';
+      else fileInput.accept = '.json,application/json';
     }
 
     function enableDragDrop() {
       let dragged = null;
       [...columnCheckboxes.querySelectorAll('.drag-item')].forEach(item => {
-        item.addEventListener('dragstart', () => {
-          dragged = item;
-          item.classList.add('dragging');
-        });
+        item.addEventListener('dragstart', () => { dragged = item; item.classList.add('dragging'); });
         item.addEventListener('dragend', () => {
           item.classList.remove('dragging');
           [...columnCheckboxes.querySelectorAll('.drag-item')].forEach(el => el.classList.remove('drag-over'));
@@ -347,16 +191,10 @@
         });
         item.addEventListener('dragover', event => {
           event.preventDefault();
-          [...columnCheckboxes.querySelectorAll('.drag-item')].forEach(el => {
-            if (el !== item) el.classList.remove('drag-over');
-          });
-          if (dragged && dragged !== item) {
-            item.classList.add('drag-over');
-          }
+          [...columnCheckboxes.querySelectorAll('.drag-item')].forEach(el => { if (el !== item) el.classList.remove('drag-over'); });
+          if (dragged && dragged !== item) item.classList.add('drag-over');
         });
-        item.addEventListener('dragleave', () => {
-          item.classList.remove('drag-over');
-        });
+        item.addEventListener('dragleave', () => item.classList.remove('drag-over'));
         item.addEventListener('drop', event => {
           event.preventDefault();
           item.classList.remove('drag-over');
@@ -364,11 +202,8 @@
           const items = [...columnCheckboxes.querySelectorAll('.drag-item')];
           const draggedIndex = items.indexOf(dragged);
           const targetIndex = items.indexOf(item);
-          if (draggedIndex < targetIndex) {
-            columnCheckboxes.insertBefore(dragged, item.nextSibling);
-          } else {
-            columnCheckboxes.insertBefore(dragged, item);
-          }
+          if (draggedIndex < targetIndex) columnCheckboxes.insertBefore(dragged, item.nextSibling);
+          else columnCheckboxes.insertBefore(dragged, item);
         });
       });
     }
@@ -378,7 +213,6 @@
       columnCheckboxes.innerHTML = '';
       headers.forEach((header, index) => {
         const label = clean(header) || `Column ${index + 1}`;
-
         const option = document.createElement('option');
         option.value = String(index);
         option.textContent = label;
@@ -387,15 +221,12 @@
         const row = document.createElement('label');
         row.className = 'drag-item';
         row.draggable = true;
-
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.value = String(index);
         checkbox.checked = index !== 0;
-
         const text = document.createElement('span');
         text.textContent = label;
-
         row.appendChild(checkbox);
         row.appendChild(text);
         columnCheckboxes.appendChild(row);
@@ -405,6 +236,7 @@
 
     function build() {
       const headingIndex = Number(h2Select.value);
+      if (Number.isNaN(headingIndex)) throw new Error('No heading selected');
       const headingTag = headingLevelSelect.value || 'h2';
       const selectedColumns = [...columnCheckboxes.querySelectorAll('input:checked')]
         .map(input => Number(input.value))
@@ -417,7 +249,7 @@
 
       const letters = [];
       records.forEach(record => {
-        const first = (record.heading.charAt(0).toUpperCase() || '#');
+        const first = record.heading.charAt(0).toUpperCase() || '#';
         const letter = /^[A-Z]$/.test(first) ? first : '#';
         if (!letters.includes(letter)) letters.push(letter);
       });
@@ -428,31 +260,25 @@
       });
 
       const nav = letters.length
-        ? `<p class="alpha-links">${letters.map(letter => `<a href="/#section-${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>`
+        ? `<p class="alpha-links">${letters.map(letter => `<a href="#section-${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>`
         : '';
 
       const seen = new Set();
       const html = records.map(record => {
-        const first = (record.heading.charAt(0).toUpperCase() || '#');
+        const first = record.heading.charAt(0).toUpperCase() || '#';
         const letter = /^[A-Z]$/.test(first) ? first : '#';
         const anchorId = `section-${letter === '#' ? 'other' : letter}`;
-        const anchor = seen.has(letter) ? '' : `<a id="${anchorId}"></a>`;
+        const headingId = seen.has(letter) ? '' : ` id="${anchorId}"`;
         seen.add(letter);
-
         const listItems = selectedColumns
           .map(index => clean(record.row[index]) ? `<li>${esc(headers[index])}: ${esc(record.row[index])}</li>` : '')
           .join('');
-
-        return `${anchor}<${headingTag}>${esc(record.heading)}</${headingTag}><ul>${listItems}</ul>`;
+        return `<${headingTag}${headingId}>${esc(record.heading)}</${headingTag}><ul>${listItems}</ul>`;
       }).join('');
 
       output = `${nav}${html}`;
       preview.innerHTML = output;
       htmlPreview.textContent = output;
-      if (toggleHtmlBtn.textContent === 'Hide HTML') {
-        htmlPreview.style.display = 'block';
-      }
-      triggerSparkle();
     }
 
     function loadTable(table) {
@@ -477,9 +303,10 @@
       fileInput.value = '';
       preview.innerHTML = '';
       htmlPreview.textContent = '';
-      htmlPreview.style.display = 'none';
-      toggleHtmlBtn.textContent = 'Preview HTML';
       mappingPanel.style.display = 'none';
+      headers = [];
+      rows = [];
+      output = '';
     });
 
     fileInput.addEventListener('change', event => {
@@ -487,7 +314,6 @@
       if (!file) return;
       const reader = new FileReader();
       status.textContent = `Reading ${fileTypeSelect.value}...`;
-
       if (fileTypeSelect.value === 'xlsx') {
         reader.onload = e => {
           try {
@@ -516,52 +342,83 @@
       }
     });
 
-    document.getElementById('generateBtn').onclick = () => {
-      build();
-      status.textContent = 'Preview generated.';
-    };
-
-    document.getElementById('copyBtn').onclick = async () => {
+    generateBtn.onclick = () => {
       try {
-        const htmlFragment = output || '';
-        const item = new ClipboardItem({
-          'text/html': new Blob([htmlFragment], { type: 'text/html' }),
-          'text/plain': new Blob([preview.innerText || ''], { type: 'text/plain' })
-        });
-        await navigator.clipboard.write([item]);
-        triggerSparkle();
-        status.textContent = 'Copied for CMS paste.';
+        build();
+        status.textContent = 'Preview generated.';
       } catch (error) {
         console.error(error);
-        try {
-          await navigator.clipboard.writeText(output || '');
-          status.textContent = 'Copied as HTML source.';
-        } catch (fallbackError) {
-          console.error(fallbackError);
-          status.textContent = 'Copy failed.';
-        }
+        status.textContent = 'Could not generate preview.';
       }
     };
 
-    toggleHtmlBtn.onclick = () => {
-      htmlPreview.textContent = output || '';
-      const isHidden = htmlPreview.style.display === 'none' || htmlPreview.style.display === '';
-      htmlPreview.style.display = isHidden ? 'block' : 'none';
-      toggleHtmlBtn.textContent = isHidden ? 'Hide HTML' : 'Preview HTML';
+    function setActivePane(mode) {
+      const showText = mode === 'text';
+      textPane.style.display = showText ? 'block' : 'none';
+      htmlPane.style.display = showText ? 'none' : 'block';
+      viewTextBtn.classList.toggle('active', showText);
+      viewHtmlBtn.classList.toggle('active', !showText);
+      viewTextBtn.setAttribute('aria-selected', showText ? 'true' : 'false');
+      viewHtmlBtn.setAttribute('aria-selected', showText ? 'false' : 'true');
+    }
+
+    viewTextBtn.onclick = () => setActivePane('text');
+    viewHtmlBtn.onclick = () => setActivePane('html');
+
+    copyPreviewBtn.onclick = () => {
+      try {
+        const temp = document.createElement('div');
+        temp.contentEditable = 'true';
+        temp.style.position = 'fixed';
+        temp.style.left = '-9999px';
+        temp.style.top = '0';
+        temp.style.opacity = '0';
+        temp.innerHTML = output || '';
+        document.body.appendChild(temp);
+        const range = document.createRange();
+        range.selectNodeContents(temp);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        const copied = document.execCommand('copy');
+        selection.removeAllRanges();
+        document.body.removeChild(temp);
+        if (!copied) throw new Error('copy failed');
+        status.textContent = 'Copied rich text for paste.';
+      } catch (error) {
+        console.error(error);
+        status.textContent = 'Rich copy failed.';
+      }
     };
 
-    document.getElementById('resetBtn').onclick = () => {
+    copyHtmlBtn.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(output || '');
+        status.textContent = 'Copied HTML source.';
+      } catch (error) {
+        console.error(error);
+        status.textContent = 'Copy failed.';
+      }
+    };
+
+    downloadBtn.onclick = () => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([output || ''], { type: 'text/html' }));
+      a.download = 'index.html';
+      a.click();
+      status.textContent = 'HTML file downloaded.';
+    };
+
+    resetBtn.onclick = () => {
       fileInput.value = '';
       preview.innerHTML = '';
       htmlPreview.textContent = '';
-      htmlPreview.style.display = 'none';
-      toggleHtmlBtn.textContent = 'Preview HTML';
       mappingPanel.style.display = 'none';
       headers = [];
       rows = [];
       output = '';
       status.textContent = 'Select a file to begin.';
-      triggerSparkle();
+      setActivePane('text');
     };
 
     updateAccept();
