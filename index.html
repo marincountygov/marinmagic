@@ -431,7 +431,7 @@
       });
 
       const nav = letters.length
-        ? `<p class="alpha-links">${letters.map(letter => `<a href="#section-${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>`
+        ? `<p class="alpha-links">${letters.map(letter => `<a data-anchor-link="${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>`
         : '';
 
       const seen = new Set();
@@ -451,6 +451,10 @@
 
       output = `${nav}${html}`;
       preview.innerHTML = output;
+      preview.querySelectorAll('[data-anchor-link]').forEach(link => {
+        const target = link.getAttribute('data-anchor-link');
+        link.setAttribute('href', `#section-${target}`);
+      });
       triggerSparkle();
     }
 
@@ -518,23 +522,66 @@
 
     document.getElementById('copyBtn').onclick = async () => {
       try {
-        const htmlFragment = `<section>${preview.innerHTML}</section>`;
-        const blob = new Blob([htmlFragment], { type: 'text/html' });
-        const item = new ClipboardItem({
-          'text/html': blob,
-          'text/plain': new Blob([preview.innerText], { type: 'text/plain' })
+        const temp = document.createElement('div');
+        temp.setAttribute('contenteditable', 'true');
+        temp.style.position = 'fixed';
+        temp.style.left = '-9999px';
+        temp.style.top = '0';
+        temp.style.opacity = '0';
+        temp.style.pointerEvents = 'none';
+
+        const clone = preview.cloneNode(true);
+        clone.querySelectorAll('[data-anchor-link]').forEach(link => {
+          const target = link.getAttribute('data-anchor-link');
+          link.setAttribute('href', `#section-${target}`);
+          link.removeAttribute('data-anchor-link');
         });
-        await navigator.clipboard.write([item]);
+
+        temp.innerHTML = clone.innerHTML;
+        document.body.appendChild(temp);
+
+        const range = document.createRange();
+        range.selectNodeContents(temp);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        const copied = document.execCommand('copy');
+        selection.removeAllRanges();
+        document.body.removeChild(temp);
+
+        if (!copied) {
+          throw new Error('execCommand copy failed');
+        }
+
         triggerSparkle();
         status.textContent = 'Copied for CMS paste.';
       } catch (error) {
         console.error(error);
         try {
-          await navigator.clipboard.writeText(preview.innerText);
-          status.textContent = 'Copied as plain text only.';
+          const temp = preview.cloneNode(true);
+          temp.querySelectorAll('[data-anchor-link]').forEach(link => {
+            const target = link.getAttribute('data-anchor-link');
+            link.setAttribute('href', `#section-${target}`);
+            link.removeAttribute('data-anchor-link');
+          });
+          const htmlFragment = `<section>${temp.innerHTML}</section>`;
+          const blob = new Blob([htmlFragment], { type: 'text/html' });
+          const item = new ClipboardItem({
+            'text/html': blob,
+            'text/plain': new Blob([preview.innerText], { type: 'text/plain' })
+          });
+          await navigator.clipboard.write([item]);
+          status.textContent = 'Copied for CMS paste.';
         } catch (fallbackError) {
           console.error(fallbackError);
-          status.textContent = 'Copy failed.';
+          try {
+            await navigator.clipboard.writeText(preview.innerText);
+            status.textContent = 'Copied as plain text only.';
+          } catch (lastError) {
+            console.error(lastError);
+            status.textContent = 'Copy failed.';
+          }
         }
       }
     };
