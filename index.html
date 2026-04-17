@@ -44,21 +44,6 @@
       line-height: 1;
       transform-origin: center center;
     }
-    @keyframes sparkle {
-      0% { transform: scale(1) rotate(0deg); opacity: 1; }
-      15% { transform: scale(1.18) rotate(-10deg); opacity: 0.85; }
-      30% { transform: scale(1.32) rotate(12deg); opacity: 1; }
-      45% { transform: scale(1.16) rotate(-8deg); opacity: 0.88; }
-      60% { transform: scale(1.3) rotate(10deg); opacity: 1; }
-      75% { transform: scale(1.14) rotate(-6deg); opacity: 0.9; }
-      100% { transform: scale(1) rotate(0deg); opacity: 1; }
-    }
-    h1.sparkle-active .icon-inline i {
-      animation: sparkle 0.8s ease-in-out 6 !important;
-      animation-fill-mode: none;
-      display: inline-block;
-      filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.25));
-    }
     .card {
       background: #fff;
       border: 1px solid #dbe4dd;
@@ -117,7 +102,18 @@
       padding: 16px;
       min-height: 200px;
       margin-top: 8px;
-      margin-bottom: 40px;
+      margin-bottom: 24px;
+    }
+    #htmlPreview {
+      display: none;
+      margin-top: 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #f8fafc;
     }
     #preview p.alpha-links {
       margin-top: 0;
@@ -231,14 +227,14 @@
     <div class="buttons">
       <button id="generateBtn" class="primary" type="button">Generate preview</button>
       <button id="copyBtn" class="primary" type="button">Copy text</button>
-      
-      
+      <button id="toggleHtmlBtn" class="dark" type="button">Preview HTML</button>
       <button id="resetBtn" class="light" type="button">Reset</button>
     </div>
 
     <div class="card">
       <h2>Preview</h2>
       <div id="preview"></div>
+      <pre id="htmlPreview"></pre>
     </div>
   </div>
 
@@ -253,7 +249,8 @@
     const headingLevelSelect = document.getElementById('headingLevelSelect');
     const columnCheckboxes = document.getElementById('columnCheckboxes');
     const preview = document.getElementById('preview');
-    const titleHeading = document.getElementById('title');
+    const htmlPreview = document.getElementById('htmlPreview');
+    const toggleHtmlBtn = document.getElementById('toggleHtmlBtn');
     const wandIcon = document.querySelector('.icon-inline i');
 
     let headers = [];
@@ -431,7 +428,7 @@
       });
 
       const nav = letters.length
-        ? `<p class="alpha-links">${letters.map(letter => `<a data-anchor-link="${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>`
+        ? `<p class="alpha-links">${letters.map(letter => `<a href="/#section-${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>`
         : '';
 
       const seen = new Set();
@@ -451,10 +448,7 @@
 
       output = `${nav}${html}`;
       preview.innerHTML = output;
-      preview.querySelectorAll('[data-anchor-link]').forEach(link => {
-        const target = link.getAttribute('data-anchor-link');
-        link.setAttribute('href', `#section-${target}`);
-      });
+      htmlPreview.textContent = output;
       triggerSparkle();
     }
 
@@ -464,6 +458,7 @@
       if (!headers.length || !rows.length) {
         mappingPanel.style.display = 'none';
         preview.innerHTML = '';
+        htmlPreview.textContent = '';
         status.textContent = 'No usable data found.';
         return;
       }
@@ -478,6 +473,9 @@
       status.textContent = 'Select a file to begin.';
       fileInput.value = '';
       preview.innerHTML = '';
+      htmlPreview.textContent = '';
+      htmlPreview.style.display = 'none';
+      toggleHtmlBtn.textContent = 'Preview HTML';
       mappingPanel.style.display = 'none';
     });
 
@@ -529,85 +527,37 @@
         temp.style.top = '0';
         temp.style.opacity = '0';
         temp.style.pointerEvents = 'none';
-
-        const clone = preview.cloneNode(true);
-        clone.querySelectorAll('[data-anchor-link]').forEach(link => {
-          const target = link.getAttribute('data-anchor-link');
-          link.setAttribute('href', `#section-${target}`);
-          link.removeAttribute('data-anchor-link');
-        });
-
-        temp.innerHTML = clone.innerHTML;
+        temp.innerHTML = preview.innerHTML;
         document.body.appendChild(temp);
-
         const range = document.createRange();
         range.selectNodeContents(temp);
         const selection = window.getSelection();
         selection.removeAllRanges();
         selection.addRange(range);
-
         const copied = document.execCommand('copy');
         selection.removeAllRanges();
         document.body.removeChild(temp);
-
-        if (!copied) {
-          throw new Error('execCommand copy failed');
-        }
-
+        if (!copied) throw new Error('copy failed');
         triggerSparkle();
         status.textContent = 'Copied for CMS paste.';
       } catch (error) {
         console.error(error);
-        try {
-          const temp = preview.cloneNode(true);
-          temp.querySelectorAll('[data-anchor-link]').forEach(link => {
-            const target = link.getAttribute('data-anchor-link');
-            link.setAttribute('href', `#section-${target}`);
-            link.removeAttribute('data-anchor-link');
-          });
-          const htmlFragment = `<section>${temp.innerHTML}</section>`;
-          const blob = new Blob([htmlFragment], { type: 'text/html' });
-          const item = new ClipboardItem({
-            'text/html': blob,
-            'text/plain': new Blob([preview.innerText], { type: 'text/plain' })
-          });
-          await navigator.clipboard.write([item]);
-          status.textContent = 'Copied for CMS paste.';
-        } catch (fallbackError) {
-          console.error(fallbackError);
-          try {
-            await navigator.clipboard.writeText(preview.innerText);
-            status.textContent = 'Copied as plain text only.';
-          } catch (lastError) {
-            console.error(lastError);
-            status.textContent = 'Copy failed.';
-          }
-        }
+        status.textContent = 'Copy failed.';
       }
     };
 
-    document.getElementById('downloadBtn').onclick = () => {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([output], { type: 'text/html' }));
-      a.download = 'index.html';
-      a.click();
-      triggerSparkle();
-      status.textContent = 'HTML file downloaded.';
-    };
-
-    document.getElementById('downloadJsonBtn').onclick = () => {
-      const data = rows.map(row => Object.fromEntries(headers.map((header, index) => [header, row[index] ?? ''])));
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
-      a.download = 'output.json';
-      a.click();
-      triggerSparkle();
-      status.textContent = 'JSON file downloaded.';
+    toggleHtmlBtn.onclick = () => {
+      const isHidden = htmlPreview.style.display === 'none' || htmlPreview.style.display === '';
+      htmlPreview.style.display = isHidden ? 'block' : 'none';
+      toggleHtmlBtn.textContent = isHidden ? 'Hide HTML' : 'Preview HTML';
     };
 
     document.getElementById('resetBtn').onclick = () => {
       fileInput.value = '';
       preview.innerHTML = '';
+      htmlPreview.textContent = '';
+      htmlPreview.style.display = 'none';
+      toggleHtmlBtn.textContent = 'Preview HTML';
       mappingPanel.style.display = 'none';
       headers = [];
       rows = [];
