@@ -518,7 +518,8 @@
 
     document.getElementById('copyBtn').onclick = async () => {
       try {
-        const blob = new Blob([output], { type: 'text/html' });
+        const htmlFragment = `<section>${preview.innerHTML}</section>`;
+        const blob = new Blob([htmlFragment], { type: 'text/html' });
         const item = new ClipboardItem({
           'text/html': blob,
           'text/plain': new Blob([preview.innerText], { type: 'text/plain' })
@@ -529,8 +530,8 @@
       } catch (error) {
         console.error(error);
         try {
-          await navigator.clipboard.writeText(output);
-          status.textContent = 'Copied as HTML source.';
+          await navigator.clipboard.writeText(preview.innerText);
+          status.textContent = 'Copied as plain text only.';
         } catch (fallbackError) {
           console.error(fallbackError);
           status.textContent = 'Copy failed.';
