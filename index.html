@@ -15,122 +15,116 @@
     h1 { margin: 0 0 28px; display: flex; align-items: center; gap: 10px; color: #000; font-size: 2.6rem; line-height: 1; }
     .title-text { font-family: 'Carter One', cursive; }
     .icon-inline { display: inline-flex; align-items: center; justify-content: center; }
-    .icon-inline i { font-size: 2rem; color: #000; line-height: 1; transform-origin: center center; }
+    .icon-inline i { font-size: 2rem; color: #000; line-height: 1; }
     .card { background: #fff; border: 1px solid #dbe4dd; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-    label, strong { font-weight: 800; color: #111827; }
-    select, input {
-      width: 100%; min-height: 48px; padding: 12px; margin: 8px 0 12px;
-      border: 1px solid #94a3b8; border-radius: 10px; box-sizing: border-box;
-      font: inherit; background: #fff; color: #111827;
-    }
+    label, strong { font-weight: 800; }
+    select, input { width: 100%; min-height: 48px; padding: 12px; margin: 8px 0 12px; border: 1px solid #94a3b8; border-radius: 10px; box-sizing: border-box; font: inherit; background: #fff; color: #111827; }
     .buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
-    button {
-      min-height: 48px; padding: 12px 18px; border: none; border-radius: 10px;
-      font-weight: 800; font-family: inherit; cursor: pointer;
-    }
+    button { min-height: 48px; padding: 12px 18px; border: none; border-radius: 10px; font-weight: 800; font-family: inherit; cursor: pointer; }
     .primary { background: #1c75bc; color: #fff; }
     .dark { background: #111827; color: #fff; }
     .light { background: #e5e7eb; color: #111827; }
     #status { margin: 12px 0 0; color: #475569; }
     #preview, #htmlPreview { border: 1px solid #94a3b8; border-radius: 12px; padding: 16px; min-height: 200px; margin-top: 8px; }
-    #htmlPreview { display: block; white-space: pre-wrap; word-break: break-word; background: #f8fafc; overflow: auto; }
+    #htmlPreview { white-space: pre-wrap; word-break: break-word; background: #f8fafc; overflow: auto; }
     #preview p.alpha-links { margin-top: 0; margin-bottom: 18px; }
     #preview p.alpha-links a { color: #0f4c81; font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
     #columnCheckboxes { display: grid; gap: 8px; margin-top: 10px; }
-    .drag-item {
-      display: flex; align-items: center; justify-content: flex-start; gap: 12px;
-      min-height: 48px; padding: 12px 14px; border: 1px solid #94a3b8; border-radius: 10px;
-      background: #fff; cursor: grab; user-select: none; text-align: left; width: 100%; box-sizing: border-box;
-    }
+    .drag-item { display: flex; align-items: center; justify-content: flex-start; gap: 12px; min-height: 48px; padding: 12px 14px; border: 1px solid #94a3b8; border-radius: 10px; background: #fff; cursor: grab; user-select: none; text-align: left; width: 100%; box-sizing: border-box; }
     .drag-item input { margin: 0; width: 18px; min-width: 18px; height: 18px; flex: 0 0 18px; }
     .drag-item span { flex: 1 1 auto; text-align: left; line-height: 1.3; }
-    .drag-item.dragging { opacity: 0.65; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18); border-color: #1c75bc; background: #f8fbff; }
-    .drag-item.drag-over { border-color: #1c75bc; box-shadow: 0 0 0 3px rgba(28, 117, 188, 0.22), 0 10px 24px rgba(0, 0, 0, 0.12); background: #f4f9ff; }
-    .preview-tabs { display: inline-flex; gap: 4px; padding: 4px; margin-top: 8px; margin-bottom: 12px; background: #f3f4f6; border: 1px solid #cbd5e1; border-radius: 999px; }
-    .tab-button { min-height: 44px; padding: 10px 16px; border: none; border-radius: 999px; background: transparent; color: #1f2937; font-weight: 800; font-family: inherit; cursor: pointer; }
-    .tab-button.active { background: #111827; color: #fff; }
+    .drag-item.dragging { opacity: 0.65; box-shadow: 0 10px 24px rgba(0,0,0,0.18); border-color: #1c75bc; background: #f8fbff; }
+    .drag-item.drag-over { border-color: #1c75bc; box-shadow: 0 0 0 3px rgba(28,117,188,0.22), 0 10px 24px rgba(0,0,0,0.12); background: #f4f9ff; }
+    .main-tabs, .preview-tabs { display: inline-flex; gap: 4px; padding: 4px; margin: 0 0 20px; background: #f3f4f6; border: 1px solid #cbd5e1; border-radius: 999px; }
+    .preview-tabs { margin-top: 8px; margin-bottom: 12px; }
+    .main-tab-button, .tab-button { min-height: 44px; padding: 10px 16px; border: none; border-radius: 999px; background: transparent; color: #1f2937; font-weight: 800; font-family: inherit; cursor: pointer; }
+    .main-tab-button.active, .tab-button.active { background: #111827; color: #fff; }
     .preview-pane { position: relative; }
     .pane-toolbar { display: flex; justify-content: flex-end; margin-bottom: 8px; }
-    .icon-copy-btn {
-      width: 44px; height: 44px; border: 1px solid #94a3b8; border-radius: 10px; background: #fff;
-      color: #374151; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-    }
-    .icon-copy-btn:hover { background: #f9fafb; }
-    .feedback-button { position: fixed; right: 20px; bottom: 20px; display: inline-flex; align-items: center; gap: 8px; min-height: 48px; background: #fff; color: #000; border: 1px solid #000; border-radius: 999px; padding: 12px 16px; text-decoration: none; font-weight: 800; box-shadow: 0 6px 18px rgba(0,0,0,0.08); z-index: 1000; }
-    a, button, input, select, .drag-item { transition: box-shadow 0.12s ease, border-color 0.12s ease, background-color 0.12s ease; }
-    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .drag-item:focus-visible {
-      outline: 3px solid #1d4ed8; outline-offset: 2px;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
-    }
+    .icon-copy-btn { width: 44px; height: 44px; border: 1px solid #94a3b8; border-radius: 10px; background: #fff; color: #374151; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+    .updates-list { display: grid; gap: 12px; margin-top: 16px; }
+    .update-item { border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px 16px; background: #fff; }
+    .update-item h3 { margin: 0 0 6px; font-size: 1rem; line-height: 1.35; }
+    .update-item h3 a { color: #0f4c81; text-decoration: underline; text-underline-offset: 2px; }
+    .update-item p { margin: 0; color: #475569; }
+    .feedback-button { position: fixed; right: 20px; bottom: 20px; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; background: #fff; color: #000; border: 1px solid #000; border-radius: 8px; padding: 6px 12px; text-decoration: none; font-weight: 800; box-shadow: 0 6px 18px rgba(0,0,0,0.08); z-index: 1000; }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1><span class="icon-inline"><i class="fa-solid fa-wand-magic-sparkles"></i></span><span class="title-text">MarinMagic</span></h1>
 
-    <div class="card">
-      <label for="fileTypeSelect">File type</label>
-      <select id="fileTypeSelect">
-        <option value="csv">.csv</option>
-        <option value="xlsx">.xlsx</option>
-        <option value="json">.json</option>
-      </select>
-
-      <label for="fileInput">Upload file</label>
-      <input id="fileInput" type="file" accept=".csv,.xlsx,.xls,.json,application/json,text/csv" />
-      <p id="status">Select a file to begin.</p>
+    <div class="main-tabs" role="tablist" aria-label="Main sections">
+      <button id="homeTabBtn" class="main-tab-button active" type="button" role="tab" aria-selected="true" aria-controls="homePane">Home</button>
+      <button id="updatesTabBtn" class="main-tab-button" type="button" role="tab" aria-selected="false" aria-controls="updatesPane">Updates</button>
     </div>
 
-    <div id="mappingPanel" class="card" style="display:none;">
-      <h2>Field mapping</h2>
-      <label for="h2Select">Select heading column</label>
-      <select id="h2Select"></select>
-      <label for="headingLevelSelect">Top-level</label>
-      <select id="headingLevelSelect">
-        <option value="h2" selected>h2</option>
-        <option value="h3">h3</option>
-        <option value="h4">h4</option>
-        <option value="h5">h5</option>
-        <option value="h6">h6</option>
-      </select>
-      <strong>Select columns for list</strong>
-      <p>Drag to reorder list items.</p>
-      <div id="columnCheckboxes"></div>
-    </div>
+    <section id="homePane" role="tabpanel" aria-labelledby="homeTabBtn">
+      <div class="card">
+        <label for="fileTypeSelect">File type</label>
+        <select id="fileTypeSelect">
+          <option value="csv">.csv</option>
+          <option value="xlsx">.xlsx</option>
+          <option value="json">.json</option>
+        </select>
 
-    <div class="buttons">
-      <button id="generateBtn" class="primary" type="button">Generate preview</button>
-      <button id="downloadBtn" class="dark" type="button">Download HTML</button>
-      <button id="resetBtn" class="light" type="button">Reset</button>
-    </div>
-
-    <div class="card">
-      <h2>Preview</h2>
-      <div class="preview-tabs" role="tablist" aria-label="Preview modes">
-        <button id="viewTextBtn" class="tab-button active" type="button" role="tab" aria-selected="true" aria-controls="textPane">Text</button>
-        <button id="viewHtmlBtn" class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="htmlPane">HTML</button>
+        <label for="fileInput">Upload file</label>
+        <input id="fileInput" type="file" accept=".csv,.xlsx,.xls,.json,application/json,text/csv" />
+        <p id="status">Select a file to begin.</p>
       </div>
 
-      <div id="textPane" class="preview-pane" role="tabpanel" aria-labelledby="viewTextBtn">
-        <div class="pane-toolbar">
-          <button id="copyPreviewBtn" class="icon-copy-btn" type="button" aria-label="Copy rich text" title="Copy rich text">
-            <i class="fa-regular fa-copy"></i>
-          </button>
+      <div id="mappingPanel" class="card" style="display:none;">
+        <h2>Field mapping</h2>
+        <label for="h2Select">Select heading column</label>
+        <select id="h2Select"></select>
+        <label for="headingLevelSelect">Top-level</label>
+        <select id="headingLevelSelect">
+          <option value="h2" selected>h2</option>
+          <option value="h3">h3</option>
+          <option value="h4">h4</option>
+          <option value="h5">h5</option>
+          <option value="h6">h6</option>
+        </select>
+        <strong>Select columns for list</strong>
+        <p>Drag to reorder list items.</p>
+        <div id="columnCheckboxes"></div>
+      </div>
+
+      <div class="buttons">
+        <button id="generateBtn" class="primary" type="button">Generate preview</button>
+        <button id="downloadBtn" class="dark" type="button">Download HTML</button>
+        <button id="resetBtn" class="light" type="button">Reset</button>
+      </div>
+
+      <div class="card">
+        <h2>Preview</h2>
+        <div class="preview-tabs" role="tablist" aria-label="Preview modes">
+          <button id="viewTextBtn" class="tab-button active" type="button" role="tab" aria-selected="true" aria-controls="textPane">Text</button>
+          <button id="viewHtmlBtn" class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="htmlPane">HTML</button>
         </div>
-        <div id="preview"></div>
-      </div>
 
-      <div id="htmlPane" class="preview-pane" style="display:none;" role="tabpanel" aria-labelledby="viewHtmlBtn">
-        <div class="pane-toolbar">
-          <button id="copyHtmlBtn" class="icon-copy-btn" type="button" aria-label="Copy HTML source" title="Copy HTML source">
-            <i class="fa-regular fa-copy"></i>
-          </button>
+        <div id="textPane" class="preview-pane" role="tabpanel" aria-labelledby="viewTextBtn">
+          <div class="pane-toolbar">
+            <button id="copyPreviewBtn" class="icon-copy-btn" type="button" aria-label="Copy rich text" title="Copy rich text"><i class="fa-regular fa-copy"></i></button>
+          </div>
+          <div id="preview"></div>
         </div>
-        <pre id="htmlPreview"></pre>
+
+        <div id="htmlPane" class="preview-pane" role="tabpanel" aria-labelledby="viewHtmlBtn" style="display:none;">
+          <div class="pane-toolbar">
+            <button id="copyHtmlBtn" class="icon-copy-btn" type="button" aria-label="Copy HTML source" title="Copy HTML source"><i class="fa-regular fa-copy"></i></button>
+          </div>
+          <pre id="htmlPreview"></pre>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section id="updatesPane" class="card" role="tabpanel" aria-labelledby="updatesTabBtn" style="display:none;">
+      <h2>Latest updates</h2>
+      <p id="updatesStatus">Select the Updates tab to load recent commits.</p>
+      <div id="updatesList" class="updates-list"></div>
+    </section>
   </div>
 
   <a class="feedback-button" href="https://form.asana.com/?k=qVUT83d5DBmlDiIyi-WAyQ&d=23133298259496" target="_blank" rel="noreferrer"><i class="fa-solid fa-circle-plus"></i> Feedback</a>
@@ -145,23 +139,75 @@
     const columnCheckboxes = document.getElementById('columnCheckboxes');
     const preview = document.getElementById('preview');
     const htmlPreview = document.getElementById('htmlPreview');
-    const textPane = document.getElementById('textPane');
-    const htmlPane = document.getElementById('htmlPane');
-    const viewTextBtn = document.getElementById('viewTextBtn');
-    const viewHtmlBtn = document.getElementById('viewHtmlBtn');
     const copyPreviewBtn = document.getElementById('copyPreviewBtn');
     const copyHtmlBtn = document.getElementById('copyHtmlBtn');
     const generateBtn = document.getElementById('generateBtn');
     const downloadBtn = document.getElementById('downloadBtn');
     const resetBtn = document.getElementById('resetBtn');
+    const viewTextBtn = document.getElementById('viewTextBtn');
+    const viewHtmlBtn = document.getElementById('viewHtmlBtn');
+    const textPane = document.getElementById('textPane');
+    const htmlPane = document.getElementById('htmlPane');
+    const homeTabBtn = document.getElementById('homeTabBtn');
+    const updatesTabBtn = document.getElementById('updatesTabBtn');
+    const homePane = document.getElementById('homePane');
+    const updatesPane = document.getElementById('updatesPane');
+    const updatesStatus = document.getElementById('updatesStatus');
+    const updatesList = document.getElementById('updatesList');
 
     let headers = [];
     let rows = [];
     let output = '';
+    let updatesLoaded = false;
 
     function clean(v) { return v == null ? '' : String(v).trim(); }
-    function esc(v) {
-      return clean(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
+    function esc(v) { return clean(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;'); }
+
+    function setMainPane(mode) {
+      const showHome = mode === 'home';
+      homePane.style.display = showHome ? 'block' : 'none';
+      updatesPane.style.display = showHome ? 'none' : 'block';
+      homeTabBtn.classList.toggle('active', showHome);
+      updatesTabBtn.classList.toggle('active', !showHome);
+      homeTabBtn.setAttribute('aria-selected', showHome ? 'true' : 'false');
+      updatesTabBtn.setAttribute('aria-selected', showHome ? 'false' : 'true');
+    }
+
+    function setPreviewPane(mode) {
+      const showText = mode === 'text';
+      textPane.style.display = showText ? 'block' : 'none';
+      htmlPane.style.display = showText ? 'none' : 'block';
+      viewTextBtn.classList.toggle('active', showText);
+      viewHtmlBtn.classList.toggle('active', !showText);
+      viewTextBtn.setAttribute('aria-selected', showText ? 'true' : 'false');
+      viewHtmlBtn.setAttribute('aria-selected', showText ? 'false' : 'true');
+    }
+
+    async function loadUpdates() {
+      if (updatesLoaded) return;
+      updatesStatus.textContent = 'Loading latest commits...';
+      updatesList.innerHTML = '';
+      try {
+        const response = await fetch('https://api.github.com/repos/marincountygov/marinmagic/commits?per_page=10', { headers: { Accept: 'application/vnd.github+json' } });
+        if (!response.ok) throw new Error(`GitHub API error: ${response.status}`);
+        const commits = await response.json();
+        if (!Array.isArray(commits) || !commits.length) {
+          updatesStatus.textContent = 'No recent commits found.';
+          return;
+        }
+        updatesLoaded = true;
+        updatesStatus.textContent = 'Latest commits from GitHub.';
+        updatesList.innerHTML = commits.map(commit => {
+          const title = clean(commit && commit.commit && commit.commit.message).split('\n')[0] || 'Untitled commit';
+          const isoDate = commit && commit.commit && commit.commit.committer && commit.commit.committer.date;
+          const formatted = isoDate ? new Date(isoDate).toLocaleString([], { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Date unavailable';
+          const commitUrl = commit && commit.html_url ? String(commit.html_url) : 'https://github.com/marincountygov/marinmagic/commits';
+          return `<article class="update-item"><h3><a href="${esc(commitUrl)}" target="_blank" rel="noreferrer">${esc(title)}</a></h3><p>${esc(formatted)}</p></article>`;
+        }).join('');
+      } catch (error) {
+        console.error(error);
+        updatesStatus.textContent = 'Could not load updates right now.';
+      }
     }
 
     function parseCsv(text) {
@@ -174,8 +220,7 @@
         const ch = normalized[i];
         const next = normalized[i + 1];
         if (ch === '"') {
-          if (inQuotes && next === '"') { cell += '"'; i += 1; }
-          else { inQuotes = !inQuotes; }
+          if (inQuotes && next === '"') { cell += '"'; i += 1; } else { inQuotes = !inQuotes; }
         } else if (ch === ',' && !inQuotes) {
           row.push(cell); cell = '';
         } else if (ch === '\n' && !inQuotes) {
@@ -259,14 +304,8 @@
       const headingIndex = Number(h2Select.value);
       if (Number.isNaN(headingIndex)) throw new Error('No heading selected');
       const headingTag = headingLevelSelect.value || 'h2';
-      const selectedColumns = [...columnCheckboxes.querySelectorAll('input:checked')]
-        .map(input => Number(input.value))
-        .filter(index => index !== headingIndex);
-
-      const records = rows
-        .map(row => ({ heading: clean(row[headingIndex]), row }))
-        .filter(record => record.heading)
-        .sort((a, b) => a.heading.localeCompare(b.heading, undefined, { sensitivity: 'base' }));
+      const selectedColumns = [...columnCheckboxes.querySelectorAll('input:checked')].map(input => Number(input.value)).filter(index => index !== headingIndex);
+      const records = rows.map(row => ({ heading: clean(row[headingIndex]), row })).filter(record => record.heading).sort((a, b) => a.heading.localeCompare(b.heading, undefined, { sensitivity: 'base' }));
 
       const letters = [];
       records.forEach(record => {
@@ -274,16 +313,9 @@
         const letter = /^[A-Z]$/.test(first) ? first : '#';
         if (!letters.includes(letter)) letters.push(letter);
       });
-      letters.sort((a, b) => {
-        if (a === '#') return -1;
-        if (b === '#') return 1;
-        return a.localeCompare(b);
-      });
+      letters.sort((a, b) => { if (a === '#') return -1; if (b === '#') return 1; return a.localeCompare(b); });
 
-      const nav = letters.length
-        ? `<p class="alpha-links">${letters.map(letter => `<a href="#section-${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>`
-        : '';
-
+      const nav = letters.length ? `<p class="alpha-links">${letters.map(letter => `<a href="#section-${letter === '#' ? 'other' : letter}">${letter}</a>`).join(' | ')}</p>` : '';
       const seen = new Set();
       const html = records.map(record => {
         const first = record.heading.charAt(0).toUpperCase() || '#';
@@ -291,9 +323,7 @@
         const anchorId = `section-${letter === '#' ? 'other' : letter}`;
         const headingId = seen.has(letter) ? '' : ` id="${anchorId}"`;
         seen.add(letter);
-        const listItems = selectedColumns
-          .map(index => clean(record.row[index]) ? `<li>${esc(headers[index])}: ${esc(record.row[index])}</li>` : '')
-          .join('');
+        const listItems = selectedColumns.map(index => clean(record.row[index]) ? `<li>${esc(headers[index])}: ${esc(record.row[index])}</li>` : '').join('');
         return `<${headingTag}${headingId}>${esc(record.heading)}</${headingTag}><ul>${listItems}</ul>`;
       }).join('');
 
@@ -328,6 +358,7 @@
       headers = [];
       rows = [];
       output = '';
+      setPreviewPane('text');
     });
 
     fileInput.addEventListener('change', event => {
@@ -363,7 +394,7 @@
       }
     });
 
-    generateBtn.onclick = () => {
+    generateBtn.addEventListener('click', () => {
       try {
         build();
         status.textContent = 'Preview generated.';
@@ -371,24 +402,9 @@
         console.error(error);
         status.textContent = 'Could not generate preview.';
       }
-    };
+    });
 
-    function setActivePane(mode) {
-      const showText = mode === 'text';
-      textPane.style.display = showText ? 'block' : 'none';
-      htmlPane.style.display = showText ? 'none' : 'block';
-      viewTextBtn.classList.toggle('active', showText);
-      viewHtmlBtn.classList.toggle('active', !showText);
-      viewTextBtn.setAttribute('aria-selected', showText ? 'true' : 'false');
-      viewHtmlBtn.setAttribute('aria-selected', showText ? 'false' : 'true');
-      textPane.setAttribute('aria-hidden', showText ? 'false' : 'true');
-      htmlPane.setAttribute('aria-hidden', showText ? 'true' : 'false');
-    }
-
-    viewTextBtn.onclick = () => setActivePane('text');
-    viewHtmlBtn.onclick = () => setActivePane('html');
-
-    copyPreviewBtn.onclick = () => {
+    copyPreviewBtn.addEventListener('click', () => {
       try {
         const temp = document.createElement('div');
         temp.contentEditable = 'true';
@@ -412,9 +428,9 @@
         console.error(error);
         status.textContent = 'Rich copy failed.';
       }
-    };
+    });
 
-    copyHtmlBtn.onclick = async () => {
+    copyHtmlBtn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(output || '');
         status.textContent = 'Copied HTML source.';
@@ -422,17 +438,22 @@
         console.error(error);
         status.textContent = 'Copy failed.';
       }
-    };
+    });
 
-    downloadBtn.onclick = () => {
+    downloadBtn.addEventListener('click', () => {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(new Blob([output || ''], { type: 'text/html' }));
       a.download = 'index.html';
       a.click();
       status.textContent = 'HTML file downloaded.';
-    };
+    });
 
-    resetBtn.onclick = () => {
+    viewTextBtn.addEventListener('click', () => setPreviewPane('text'));
+    viewHtmlBtn.addEventListener('click', () => setPreviewPane('html'));
+    homeTabBtn.addEventListener('click', () => setMainPane('home'));
+    updatesTabBtn.addEventListener('click', async () => { setMainPane('updates'); await loadUpdates(); });
+
+    resetBtn.addEventListener('click', () => {
       fileInput.value = '';
       preview.innerHTML = '';
       htmlPreview.textContent = '';
@@ -441,9 +462,11 @@
       rows = [];
       output = '';
       status.textContent = 'Select a file to begin.';
-      setActivePane('text');
-    };
+      setPreviewPane('text');
+    });
 
+    setMainPane('home');
+    setPreviewPane('text');
     updateAccept();
   </script>
 </body>
